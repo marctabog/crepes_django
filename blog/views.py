@@ -7,8 +7,8 @@ def home(request):
 
     conn = sqlite3.connect('db.sqlite3')
     c = conn.cursor()
-    c.execute('''CREATE TABLE stocks
-                 (date text, trans text, symbol text, qty real, price real)''')
+    #c.execute('''CREATE TABLE stocks
+     #            (date text, trans text, symbol text, qty real, price real)''')
 
     # Insert a row of data
     c.execute("INSERT INTO stocks VALUES ('2006-01-05','BUY','RHAT',100,35.14)")
@@ -25,8 +25,9 @@ def home(request):
     c.execute("SELECT * FROM stocks")
 
     print('res:')
-    print(c.fetchall())
+    a= c.fetchall()
+    print(a)
     """ Exemple de page HTML, non valide pour que l'exemple soit concis """
     text = """<h1>Bienvenue sur mon blog !</h1>
               <p>Les crêpes bretonnes ça tue des mouettes en plein vol !</p>"""
-    return HttpResponse(str(c.fetchall()))
+    return HttpResponse(a)
