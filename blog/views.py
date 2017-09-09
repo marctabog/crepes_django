@@ -23,6 +23,7 @@ def home(request):
     cursor = conn.cursor()
     print(cursor)
     print('after_cursor')
+    '''
     cursor.execute("""CREATE TABLE temps (
         ville           varchar(80),
         t_basse         int,           -- température basse
@@ -30,6 +31,7 @@ def home(request):
         prcp            real,          -- précipitation
         date            date
     );""")
+    '''
     print('after_execute create')
 
     cursor.execute("""INSERT INTO temps VALUES ('San Francisco', 46, 50, 0.25, '1994-11-27');""")
