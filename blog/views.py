@@ -197,7 +197,7 @@ def process(request):
     #conn = sqlite3.connect("table2")
     #cur = conn.cursor()
     #PandasDataFrame=pd.read_sql_query("select * from rankings;", conn).set_index('index')
-    PandasDataFrame=pd.read_csv('/static/rankings_natcourse_25.csv',encoding='latin-1',sep=';')
+    PandasDataFrame=pd.read_csv('/rankings_natcourse_25.csv',encoding='latin-1',sep=';')
     working_df = PandasDataFrame.copy()
     #response = HttpResponse(content_type='text/csv')
     #response['Content-Disposition'] = 'attachment; filename=filename.csv'
