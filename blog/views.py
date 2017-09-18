@@ -261,7 +261,7 @@ def contact(request):
         else:
             group_by_year = working_df.query("birthyear == " + str(year_group))
             name_list = list(group_by_year['nom+prenom'].unique())
-        if(len(name_list==0)):
+        if(len(name_list)==0):
             return HttpResponse('Erreur, aucun nageur ne correspond aux critères saisis!')
         groupe_tmp = get_prog_list_names(name_list, working_df)
         groupe_with_avg = get_group_avg(groupe_tmp)
