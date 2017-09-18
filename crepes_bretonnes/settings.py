@@ -56,6 +56,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'crepes_bretonnes.urls'
+print('basedir')
 print(BASE_DIR)
 TEMPLATES = [
     {
