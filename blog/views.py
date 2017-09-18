@@ -235,6 +235,13 @@ def process(request):
 
 
 def contact(request):
+    PandasDataFrame = pd.read_csv('rankings_natcourse_25.csv', encoding='latin-1', sep=';')
+    working_df = PandasDataFrame.copy()
+    working_df['temps_ok'] = PandasDataFrame['rankingtime'].apply(process_time_seconds)
+    working_df['date_ok'] = PandasDataFrame['rankingdate'].apply(process_date)
+    working_df['saison_en_cours'] = working_df['date_ok'].apply(is_saison_en_cours)
+    working_df['nom+prenom'] = working_df['lastname'] + ' ' + working_df['firstname']
+
     # Construire le formulaire, soit avec les données postées,
     # soit vide si l'utilisateur accède pour la première fois
     # à la page.
@@ -244,15 +251,39 @@ def contact(request):
     # dans le formulaire ou qu'il contient des erreurs.
     if form.is_valid():
         # Ici nous pouvons traiter les données du formulaire
-        sujet = form.cleaned_data['sujet']
-        message = form.cleaned_data['message']
-        envoyeur = form.cleaned_data['envoyeur']
-        renvoi = form.cleaned_data['renvoi']
-        print(sujet)
-        print(message)
+        year_group = form.cleaned_data['annee_naissance_groupe']
+        names_bool = form.cleaned_data['choix_liste_noms']
+        list_group = form.cleaned_data['liste_nageurs']
+        group_name = form.cleaned_data['nom_du_groupe']
+
+        if names_bool:
+            name_list = list_group.split('/')
+        else:
+            group_by_year = working_df.query("birthyear == " + str(year_group))
+            name_list = list(group_by_year['nom+prenom'].unique())
+
+        groupe_tmp = get_prog_list_names(name_list, working_df)
+        groupe_with_avg = get_group_avg(groupe_tmp)
+
+        # year_1995 = working_df.query("birthyear == " + str(1996))
+
+        # year_1995names = list(year_1995['nom+prenom'].unique())
+        # year_1995names_0 = working_df.loc[
+        # working_df['nom+prenom'].isin(['TABOGA Vincent', 'TABOGA Marc', 'COUDERT Rémi'])]
+        # year_1995names = list(year_1995names_0['nom+prenom'].unique())
+        # print(year_1995names)
+
         # Nous pourrions ici envoyer l'e-mail grâce aux données
         # que nous venons de récupérer
-        envoi = True
+        RANKINGS_MON = './' + group_name + '.xlsx'
+        list_sheets = [pd.DataFrame(groupe_with_avg[k]) for k in groupe_with_avg.keys()]
+        writer = save_xls(list_sheets, RANKINGS_MON)
 
+        response = HttpResponse(writer,
+                                content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        response['Content-Disposition'] = "attachment; filename=" + group_name + ".xlsx"
+
+        return response
+    print('here')
     # Quoiqu'il arrive, on affiche la page du formulaire.
     return render(request, 'contact.html', locals())
