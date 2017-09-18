@@ -4,7 +4,9 @@ from django.http import HttpResponse
 import psycopg2
 import sys
 import pprint
-
+from django.conf import settings
+from os import listdir
+from os.path import isfile, join
 
 
 def home(request):
@@ -43,14 +45,8 @@ def home(request):
     # commit the changes
     conn.commit()
 
-    from django.conf import settings
-    from os import listdir
-    from os.path import isfile, join
 
-    chare = str(settings.STATICFILES_DIRS)
-    
-
-    return HttpResponse(chare)
+    return HttpResponse(res)
 
 
 
@@ -203,7 +199,7 @@ def process(request):
     #conn = sqlite3.connect("table2")
     #cur = conn.cursor()
     #PandasDataFrame=pd.read_sql_query("select * from rankings;", conn).set_index('index')
-    PandasDataFrame=pd.read_csv('rankings_natcourse_25.csv',encoding='latin-1',sep=';')
+    PandasDataFrame=pd.read_csv(str(settings.STATICFILES_DIRS)+'rankings_natcourse_25.csv',encoding='latin-1',sep=';')
     working_df = PandasDataFrame.copy()
     #response = HttpResponse(content_type='text/csv')
     #response['Content-Disposition'] = 'attachment; filename=filename.csv'
