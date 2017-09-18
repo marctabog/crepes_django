@@ -60,7 +60,7 @@ ROOT_URLCONF = 'crepes_bretonnes.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR+'templates/'],
+        'DIRS': [BASE_DIR+'ranking_process/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
