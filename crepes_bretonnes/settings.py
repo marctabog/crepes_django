@@ -58,7 +58,7 @@ from os import listdir
 from os.path import isfile, join
 ROOT_URLCONF = 'crepes_bretonnes.urls'
 print('basedir')
-print(str([f for f in listdir(BASE_DIR+'ranking_process/templates/') if isfile(join(BASE_DIR+'ranking_process/templates/', f))]))
+print(str([f for f in listdir(BASE_DIR+'ranking_process/templates/') if isfile(join(BASE_DIR+'ranking_process/templates/',f))]))
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
