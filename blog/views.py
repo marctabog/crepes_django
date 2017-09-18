@@ -44,10 +44,12 @@ def home(request):
     conn.commit()
 
     from django.conf import settings
+    from os import listdir
+    from os.path import isfile, join
 
     chare = ''
     for folder in settings.STATICFILES_DIRS:
-        chare = chare+"//"+str(folder)
+        chare = str([f for f in listdir(folder) if isfile(join(folder, f))])
 
 
     return HttpResponse(chare)
