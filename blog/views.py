@@ -43,8 +43,14 @@ def home(request):
     # commit the changes
     conn.commit()
 
+    from django.conf import settings
 
-    return HttpResponse(res)
+    chare = ''
+    for folder in settings.STATICFILES_DIRS:
+        chare = chare+"//"+str(folder)
+
+
+    return HttpResponse(chare)
 
 
 
@@ -197,7 +203,7 @@ def process(request):
     #conn = sqlite3.connect("table2")
     #cur = conn.cursor()
     #PandasDataFrame=pd.read_sql_query("select * from rankings;", conn).set_index('index')
-    PandasDataFrame=pd.read_csv('static/crepes_django/rankings_natcourse_25.csv',encoding='latin-1',sep=';')
+    PandasDataFrame=pd.read_csv('rankings_natcourse_25.csv',encoding='latin-1',sep=';')
     working_df = PandasDataFrame.copy()
     #response = HttpResponse(content_type='text/csv')
     #response['Content-Disposition'] = 'attachment; filename=filename.csv'
