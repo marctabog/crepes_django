@@ -235,7 +235,7 @@ def process(request):
 
 
 def contact(request):
-    PandasDataFrame = pd.read_csv('rankings_natcourse_25.csv', encoding='latin-1', sep=';')
+    PandasDataFrame = pd.read_csv('blog/static/rankings_natcourse_25.csv', encoding='latin-1', sep=';')
     working_df = PandasDataFrame.copy()
     working_df['temps_ok'] = PandasDataFrame['rankingtime'].apply(process_time_seconds)
     working_df['date_ok'] = PandasDataFrame['rankingdate'].apply(process_date)
