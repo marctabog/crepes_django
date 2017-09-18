@@ -47,10 +47,8 @@ def home(request):
     from os import listdir
     from os.path import isfile, join
 
-    chare = ''
-    for folder in settings.STATICFILES_DIRS:
-        chare = str([f for f in listdir(folder) if isfile(join(folder, f))])
-
+    chare = str(settings.STATICFILES_DIRS)
+    
 
     return HttpResponse(chare)
 
