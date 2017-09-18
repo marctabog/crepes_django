@@ -48,7 +48,7 @@ def home(request):
     from os.path import isfile, join
 
     chare = ''
-    for folder in settings.STATICFILES_DIRS[0]:
+    for folder in settings.STATICFILES_DIRS:
         chare = str([f for f in listdir(folder) if isfile(join(folder, f))])
 
 
