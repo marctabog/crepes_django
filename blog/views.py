@@ -161,6 +161,8 @@ def get_prog_list_names(names,working_df):
 
 def get_group_avg(groupe):
     total = 0
+    if len(groupe)==0:
+            return HttpResponse('Erreur, aucune course cette saison pour les nageurs entrés!')
     for item in groupe.keys():
         print(item)
         total += groupe[item]['Moyenne']
@@ -263,8 +265,7 @@ def contact(request):
             name_list = list(group_by_year['nom+prenom'].unique())
         print(name_list)
         print(len(name_list))
-        if(len(name_list)==0):
-            return HttpResponse('Erreur, aucun nageur ne correspond aux critères saisis!')
+
         groupe_tmp = get_prog_list_names(name_list, working_df)
         groupe_with_avg = get_group_avg(groupe_tmp)
 
