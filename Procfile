@@ -1,2 +1,2 @@
-web: gunicorn crepes_bretonnes.wsgi --log-file -
+web: gunicorn rankings_renald.wsgi --log-file -
 
